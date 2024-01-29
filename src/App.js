@@ -6,11 +6,13 @@ import Navbar from "./components/Navbar";
 import ExpenseTracker from "./components/Transactions/ExpenseTracker";
 
 
-function Home ({ userJWTToken, userFirebaseRefId, showSignupForm, setShowSignupForm }) {
+function Home ({ userJWTToken,  showSignupForm, setShowSignupForm }) {
+
+  console.log(showSignupForm);
   return (
         <div>
             <Navbar showSignupForm={showSignupForm} setShowSignupForm={setShowSignupForm} />
-            {userJWTToken || userFirebaseRefId ? <ExpenseTracker /> : <NoUser showSignupForm={showSignupForm} setShowSignupForm={setShowSignupForm} />}
+            {userJWTToken ? <ExpenseTracker /> : <NoUser showSignupForm={showSignupForm} setShowSignupForm={setShowSignupForm} />}
         </div>
   );
 }
@@ -23,7 +25,7 @@ function App () {
         <Router>
             <div className="App">
                 <Routes>
-                <Route path="/" element={<Home userJWTToken={userJWTToken} userFirebaseRefId={userFirebaseRefId} showSignupForm={showSignupForm} setShowSignupForm={setShowSignupForm} />} />
+                <Route path="/" element={<Home userJWTToken={userJWTToken}  showSignupForm={showSignupForm} setShowSignupForm={setShowSignupForm} />}  />
                 </Routes>
             </div>
         </Router>
