@@ -6,26 +6,30 @@ import Navbar from "./components/Navbar";
 import ExpenseTracker from "./components/Transactions/ExpenseTracker";
 
 
-function Home ({ userJWTToken,  showSignupForm, setShowSignupForm }) {
-
-  console.log(showSignupForm);
+function Home({ userJWTToken, setShowSignupForm }) {
   return (
-        <div>
-            <Navbar showSignupForm={showSignupForm} setShowSignupForm={setShowSignupForm} />
-            {userJWTToken ? <ExpenseTracker /> : <NoUser showSignupForm={showSignupForm} setShowSignupForm={setShowSignupForm} />}
-        </div>
+    
+    <div>
+      <Navbar setShowSignupForm={setShowSignupForm} />
+      {userJWTToken ? (
+        <ExpenseTracker />
+      ) : (
+        <NoUser setShowSignupForm={setShowSignupForm} />
+      )}
+    </div>
   );
 }
-
 function App () {
   const [showSignupForm, setShowSignupForm] = useState(false);
-  const userJWTToken = JSON.parse(localStorage.getItem("expenseTrackerUserJWTToken"));
-  const userFirebaseRefId = JSON.parse(localStorage.getItem("expenseTrackerUserFirebaseRefId"));
+  const userJWTToken = JSON.parse(localStorage.getItem("userJWTToken"));
   return (
         <Router>
             <div className="App">
                 <Routes>
-                <Route path="/" element={<Home userJWTToken={userJWTToken}  showSignupForm={showSignupForm} setShowSignupForm={setShowSignupForm} />}  />
+                 <Route
+                  path="/"
+                  element={<Home userJWTToken={userJWTToken} setShowSignupForm={setShowSignupForm} />}
+                 />
                 </Routes>
             </div>
         </Router>

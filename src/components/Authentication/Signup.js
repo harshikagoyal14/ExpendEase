@@ -3,7 +3,7 @@ import "../../index.css";
 import "../../styles/Signup.css";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ReactComponent as CloseIcon } from "../../icons/close.svg"; // Import the Close icon component
+import { ReactComponent as CloseIcon } from "../../icons/close.svg"; 
 
 function Signup ({ setShowSignupForm }) {
   const [invalidEmailFormat, setInvalidEmailFormat] = useState(false);
@@ -71,7 +71,10 @@ function Signup ({ setShowSignupForm }) {
   try {
     const response = await axios.post("http://localhost:3000/api/users/signup", signupData);
     setEmailVerificationSent(true);
-    console.log(response.data); // Assuming the response contains relevant information
+    console.log(response.data);
+    const userJWTToken = response.data.token;
+    localStorage.setItem("userJWTToken", JSON.stringify(userJWTToken));
+    
   } catch (error) {
     if (error.response && error.response.status === 409) {
       setUserExists(true);

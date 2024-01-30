@@ -26,6 +26,10 @@ function Login({ setShowLoginForm }) {
       // Make a POST request to your login API endpoint
       const response = await axios.post("http://localhost:3000/api/users/login", loginData);
       console.log("User logged in: ", response.data);
+      const userJWTToken = response.data.token;
+      console.log(userJWTToken);
+      localStorage.setItem("userJWTToken", JSON.stringify(userJWTToken));
+      console.log(localStorage);
       // Handle successful login response here
     } catch (error) {
       setLoading(false);

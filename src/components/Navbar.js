@@ -11,7 +11,6 @@ function Navbar (props) {
   const userJWTToken = JSON.parse(localStorage.getItem("expenseTrackerUserJWTToken"));
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [user, setUser] = useState(null);
-  console.log(props.showLoginForm);
 
   useEffect(() => {
     const fetchUser = async () => {
