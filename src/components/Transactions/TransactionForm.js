@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/TransactionForm.css";
 import "../../index.css";
 
-function TransactionForm({ user, editEnabled, setEditEnabled }) {
+function TransactionForm({ user, editEnabled, setEditEnabled, formData,setFormData}) {
 
     const newTransaction = () => {
     setEditEnabled(false);
@@ -30,32 +30,54 @@ function TransactionForm({ user, editEnabled, setEditEnabled }) {
   };
 
 
-  const [formData, setFormData] = useState({
-    transactionType: "",
-    category: "",
-    date: "",
-    amount: "",
-    description: ""
-  });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const today = new Date();
+    if (formData.transactionType === "") {
+      toast.error("Please select a transaction type.");
+      return;
+    }
+    if (formData.transactionType === "Income" && formData.category !== "NULL") {
+      setFormData({ ...formData, category: "NULL" });
+    }
+    if (formData.transactionType === "Expense" && formData.category === "") {
+      toast.error("Please select a category.");
+      return;
+    }
+    if (formData.date === "") {
+      toast.error("Please select a date.");
+      return;
+    }
+    const selectedDate = new Date(formData.date);
+    if (selectedDate > today) {
+      toast.error("Please select a date in the past or present.");
+      return;
+    }
+    if (formData.amount === "") {
+      toast.error("Please enter an amount.");
+      return;
+    }
+    if (formData.description === "") {
+      toast.error("Please enter a description.");
+      return;
+    }
     try {
       if (editEnabled) {
-        await axios.put(`http://localhost:3000/api/transactions/${formData._id}`, formData);
-        toast.success("Transaction edited successfully.");
-      } else {
+       await axios.put(`http://localhost:3000/api/transactions/${formData._id}`, formData);
+       toast.success("Transaction edited successfully.");
+      } 
         await axios.post("http://localhost:3000/api/transactions", { ...formData, userEmail: user.email });
         toast.success("Transaction added successfully.");
-      }
+        console.log(formData);
+      
       setFormData({
         transactionType: "",
         category: "",
         date: "",
         amount: "",
         description: ""
-      });
-      setEditEnabled(false);
+      }); 
+      setEditEnabled(true);
     } catch (error) {
       console.error("Error:", error);
       toast.error("Error adding/editing transaction.");
@@ -63,8 +85,15 @@ function TransactionForm({ user, editEnabled, setEditEnabled }) {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const targetValue = e.target.name === "amount" ? parseFloat(e.target.value) : e.target.value;
+    setFormData({ ...formData, [e.target.name]: targetValue });
   };
+
+  useEffect(() => {
+    if (formData.transactionType === "Income") {
+      setFormData({ ...formData, category: "NULL" });
+    }
+  }, [formData.transactionType]);
 
   return (
     <div className="form_container border-[1.5px] rounded flex flex-col justify-between transition-all duration-500">

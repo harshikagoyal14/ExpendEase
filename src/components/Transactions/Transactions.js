@@ -14,11 +14,9 @@ import MyLoader from "./TransactionLoading";
 import "../../styles/Transactions.css";
 import "../../index.css";
 
-function Transactions({ descriptionChars }) {
-  const [transactions, setTransactions] = useState([]);
-  const [transactionsLoading, setTransactionsLoading] = useState(true);
-  const [formData, setFormData] = useState(null); 
-  const [editEnabled, setEditEnabled] = useState(false); 
+function Transactions({ transactions,setTransactions,user,setEditEnabled,setFormData, descriptionChars }) {
+  
+  const [transactionsLoading, setTransactionsLoading] = useState(true); 
   const [dateFillter, setDateFilter] = useState("");
   const [transactionFilter, setTransactionFilter] = useState([]);
   const [transactionType, setTransactionType] = useState("");
@@ -31,7 +29,7 @@ function Transactions({ descriptionChars }) {
 
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/transactions"); // Assuming your server exposes transactions at this endpoint
+        const response = await axios.get("http://localhost:3000/api/transactions"); 
         setTransactions(response.data);
         setTransactionsLoading(false);
       } catch (error) {
@@ -52,7 +50,7 @@ function Transactions({ descriptionChars }) {
     setFormData(editedTransaction);
   };
 
-const addTransaction = async (newTransactionData) => {
+/* const addTransaction = async (newTransactionData) => {
   try {
     await axios.post("http://localhost:3000/api/transactions", newTransactionData);
     toast.success("Transaction added successfully.");
@@ -62,7 +60,7 @@ const addTransaction = async (newTransactionData) => {
   } catch (error) {
     toast.error("Error adding transaction.");
   }
-};
+}; */
 
 const TransactionTypeChange = async (e) => {
   try {
@@ -92,10 +90,10 @@ const CategoryChange = async (e) => {
   try {
     let filteredTransactions = [];
     if (e.target.value === "All") {
-      const response = await axios.get("http://localhost:3000/api/transactions/api/transactions"); // Fetch all transactions
+      const response = await axios.get("http://localhost:3000/api/transactions"); // Fetch all transactions
       filteredTransactions = response.data;
     } else {
-      const response = await axios.get(`http://localhost:3000/api/transactions/api/transactions?category=${e.target.value}`); // Fetch transactions filtered by category
+      const response = await axios.get(`http://localhost:3000/api/transactions?category=${e.target.value}`); // Fetch transactions filtered by category
       filteredTransactions = response.data;
     }
     
@@ -134,10 +132,6 @@ const changeDateFilter = async (e) => {
   }
 };
 
-
-
-
-
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -154,6 +148,7 @@ const changeDateFilter = async (e) => {
     setCategoryDropdownOpen(false);
   };
 
+  /*
   const updateTransaction = async (transactionId, updatedTransactionData) => {
   try {
     await axios.put(`http://localhost:3000/api/transactions/${transactionId}`, updatedTransactionData);
@@ -164,6 +159,7 @@ const changeDateFilter = async (e) => {
     toast.error("Error updating transaction.");
   }
  };
+ */
 
   const handleDelete = async (transactionId, index) => {
     try {
@@ -183,6 +179,7 @@ const changeDateFilter = async (e) => {
       toast.error("Error deleting transaction.");
     }
   };
+  
 
 
   return (

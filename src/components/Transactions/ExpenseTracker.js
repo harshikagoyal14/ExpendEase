@@ -9,7 +9,7 @@ import Transactions from "./Transactions";
 import TransactionForm from "./TransactionForm";
 
 function ExpenseTracker () {
-  const userJWTToken = JSON.parse(localStorage.getItem("expenseTrackerUserJWTToken"));
+  const userJWTToken = JSON.parse(localStorage.getItem("userJWTToken"));
   const [user, setUser] = useState({});
   const [transactions, setTransactions] = useState([]);
   const [formData, setFormData] = useState({
@@ -42,6 +42,7 @@ function ExpenseTracker () {
       window.location.reload();
     }
   };
+
 
   useEffect(() => {
     if (userJWTToken) {
@@ -78,7 +79,7 @@ function ExpenseTracker () {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
-  return (
+ return (
     <div className="expenseTracker_parent mt-20">
       <div className="balance_container border-[1.5px] rounded transition-all duration-500">
         <h3 className="text-black">Your Balance-</h3>

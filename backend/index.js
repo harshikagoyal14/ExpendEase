@@ -1,8 +1,9 @@
 const express = require('express');
 const connectDb = require('./configDB/mongoDB');
 const { login, signup, authenticateJWT, userProfile } = require('./controllers/userController');
-const transactionRoutes = require('./routes/transactionRoutes');
+const {addTransaction,updateTransaction,getTransactions,deleteTransaction} = require('./controllers/transactionController');
 const cors = require('cors');
+
 
 // Connect to MongoDB
 connectDb();
@@ -21,7 +22,11 @@ app.get('/api/user', authenticateJWT, (req, res) => {
     res.json({ message: 'Protected route accessed successfully!', user: req.user });
 });
 // Transaction routes
-app.use('/api/transactions', transactionRoutes);
+app.post('/api/transactions', addTransaction);
+app.get('/api/transactions', getTransactions);
+app.put('/api/transactions/:id', updateTransaction);
+app.delete('/api/transactions/:id', deleteTransaction);
+
 
 // Start the Express server
 const PORT = process.env.PORT || 3000;

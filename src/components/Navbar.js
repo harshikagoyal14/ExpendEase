@@ -8,30 +8,34 @@ import { SiMoneygram } from "react-icons/si";
 import { Link } from "react-router-dom";
 
 function Navbar (props) {
-  const userJWTToken = JSON.parse(localStorage.getItem("expenseTrackerUserJWTToken"));
+  const token = JSON.parse(localStorage.getItem("userJWTToken"));
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
+  
+  
+    const fetchUser = async (token) => {
       try {
-        const token = localStorage.getItem("expenseTrackerUserJWTToken");
-        if (token) {
-          const response = await axios.get("http://localhost:3000/api/users", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setUser(response.data.user);
+        const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
+      };
+          const response = await axios.get("http://localhost:3000/api/user", config);
+          setUser(response.data.user);
+        
       } catch (error) {
         console.error("Error fetching user:", error);
+        localStorage.clear();
+        window.location.reload();
       }
     };
+    useEffect(() => {
+    if (token) {
+      fetchUser(token);
+    }
+  }, [token]);
 
-    fetchUser();
-  }, []);
-
+  
   return (
     <div className="navbar_parent z-10 absolute top-0 text-black">
       <h1 className="flex flex-1 gap-2 items-center">

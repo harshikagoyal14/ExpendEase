@@ -6,7 +6,7 @@ const transactionSchema = new mongoose.Schema({
   date: { type: Date, required: true },
   amount: { type: Number, required: true },
   description: { type: String, required: true },
-  userEmail: { type: String, required: true }, 
+  userEmail: { type: String, required: false }, 
   createdAt: { type: Date, default: Date.now }
 });
 
