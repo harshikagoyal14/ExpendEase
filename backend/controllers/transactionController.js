@@ -2,7 +2,6 @@ const Transaction = require('../models/transaction');
 
 const addTransaction = async (req, res) => {
   try {
-    console.log( "heheeheheh" ,req.body);
     const newTransaction = new Transaction(req.body);
     await newTransaction.save();
     res.status(201).json({ message: 'Transaction added successfully' });

@@ -5,13 +5,13 @@ import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ReactComponent as CloseIcon } from "../../icons/close.svg"; 
 
+
 function Signup ({ setShowSignupForm }) {
   const [invalidEmailFormat, setInvalidEmailFormat] = useState(false);
   const [userExists, setUserExists] = useState(false);
   const [passwordUnmatched, setPasswordUnmatched] = useState(false);
   const [invalidName, setInvalidName] = useState(false);
   const [invalidPassword, setInvalidPassword] = useState(false);
-  const [emailVerificationSent, setEmailVerificationSent] = useState(false);
   const [passwordShow, setPasswordShow] = useState(false);
   const [confirmpasswordShow, setconfirmPasswordShow] = useState(false);
   const [signupData, setSignupData] = useState({
@@ -49,7 +49,6 @@ function Signup ({ setShowSignupForm }) {
     setInvalidEmailFormat(false);
     setInvalidPassword(false);
     setInvalidName(false);
-    setEmailVerificationSent(false);
     setPasswordUnmatched(true);
     setLoading(false);
     return;
@@ -60,7 +59,6 @@ function Signup ({ setShowSignupForm }) {
     setPasswordUnmatched(false);
     setInvalidEmailFormat(false);
     setInvalidName(false);
-    setEmailVerificationSent(false);
     setInvalidPassword(true);
     setLoading(false);
     return;
@@ -70,10 +68,12 @@ function Signup ({ setShowSignupForm }) {
 
   try {
     const response = await axios.post("http://localhost:3000/api/users/signup", signupData);
-    setEmailVerificationSent(true);
     console.log(response.data);
     const userJWTToken = response.data.token;
     localStorage.setItem("userJWTToken", JSON.stringify(userJWTToken));
+    alert("Signup successful");
+    window.location.reload();
+
     
   } catch (error) {
     if (error.response && error.response.status === 409) {
@@ -144,7 +144,6 @@ function Signup ({ setShowSignupForm }) {
         {invalidEmailFormat && <p className="error_message">Invalid email format</p>}
         {invalidName && <p className="error_message">Invalid name format</p>}
         {invalidPassword && <p className="error_message">Invalid Password format</p>}
-        {emailVerificationSent && <p className="error_message" style={{ color: "white" }}>Email verification sent. Please verify.</p>}
         <button type='submit' style={{ marginTop: "10px", width: "100%", cursor: loading ? "not-allowed" : "pointer" ,backgroundColor:"blue"}} disabled={loading} className="signupBtn">
           {loading
             ? (

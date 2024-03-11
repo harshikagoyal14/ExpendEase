@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, {useEffect} from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,16 +17,6 @@ function TransactionForm({ user, editEnabled, setEditEnabled, formData,setFormDa
       amount: ""
     };
     setFormData(addedTransaction);
-  };
-
-  const generateTransactionId = () => {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let transactionId = "";
-    for (let i = 0; i < 10; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      transactionId += characters.charAt(randomIndex);
-    }
-    return transactionId;
   };
 
 

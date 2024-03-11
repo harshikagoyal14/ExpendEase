@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import "../../styles/DoughnutChart.css"
 import "../../index.css";

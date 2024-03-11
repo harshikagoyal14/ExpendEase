@@ -30,6 +30,8 @@ function Login({ setShowLoginForm }) {
       console.log(userJWTToken);
       localStorage.setItem("userJWTToken", JSON.stringify(userJWTToken));
       console.log(localStorage);
+      window.location.reload();
+
       // Handle successful login response here
     } catch (error) {
       setLoading(false);
@@ -79,7 +81,7 @@ function Login({ setShowLoginForm }) {
         <button type='submit' style={{ marginTop: "10px", width: "100%", cursor: loading ? "not-allowed" : "pointer" ,backgroundColor:"blue"}} disabled={loading} className='loginBtn'>
           {loading
             ? (<div className="loading-spinner"></div>)
-            : ("Log in" // Note: 'Log in' should be a string
+            : ("Log in" 
               )
           }
         </button>
