@@ -21,6 +21,7 @@ To get started with Expend Ease, follow these simple steps:
 
 3. Create a .env file in the root directory:
 
+```bash
 MONGODB_URI = "database url"
 SECRET_KEY=your_secret_key_here
 SALT=your_salt_here
