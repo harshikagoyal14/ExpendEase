@@ -6,35 +6,32 @@ Expend Ease is a user-friendly application designed to help you manage your budg
 
 To get started with Expend Ease, follow these simple steps:
 
-1. Clone the repository to your local machine:
+1. **Clone the repository:**
 
-```bash
-git clone https://github.com/your_username/expend-ease.git
+   ```bash
+   git clone https://github.com/harshikagoyal14/ExpendEase.git
 
- a. Install dependencies for both the frontend and backend:
-cd expend-ease
-npm install
-cd backend
-npm install
+2. Install dependencies for both the frontend and backend:
 
-b. Create an .env file in the root folder and add the following configurations:
+   ```bash
+   cd expend-ease
+   npm install
+   cd backend
+   npm install
 
-MONGODB_URI="your-mongo-url"
+3. Create a .env file in the root directory:
+
+MONGODB_URI = "database url"
 SECRET_KEY=your_secret_key_here
 SALT=your_salt_here
-PORT=your_port_here
+PORT = your_port_here
 
-Replace your_secret_key_here, your_salt_here, and your_port_here with your preferred values.
-
-2. Start the sever
-
- npm start
-
- cd backend
- npm start
-
-
-##Features
+4. Start the development server:
+   
+   ```bash
+   npm start
+   
+## Features
 
 1. Budget Management: Set monthly budgets and track your spending to ensure you stay within your financial limits.
 2. Expense Tracking: Log your expenses with ease and categorize them for better organization.
