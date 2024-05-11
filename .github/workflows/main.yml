@@ -1,34 +1,42 @@
 name: Basic Workflow
-'on':
+
+on:
   push:
     branches:
       - master
   pull_request:
     branches:
       - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Print current directory
-        run: pwd
-      - name: List files in repository
-        run: ls -l
+    - name: Print Hello, world!
+      run: echo "Hello, world!"
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Print current directory
+      run: pwd
+
+    - name: List files in repository
+      run: ls -l
+
   merge-check:
     runs-on: ubuntu-latest
+
     if: github.event_name == 'pull_request'
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Check if PR can be merged
-        run: >
-          git fetch origin pull/${{ github.event.pull_request.number }}/merge
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-          git checkout FETCH_HEAD
-
-          git diff master --exit-code || (echo "PR cannot be automatically
-          merged" && exit 1)
-
-          echo "PR can be automatically merged"
+    - name: Check if PR can be merged
+      run: |
+        git fetch origin pull/${{ github.event.pull_request.number }}/merge
+        git checkout FETCH_HEAD
+        git diff master --exit-code || (echo "PR cannot be automatically merged" && exit 1)
+        echo "PR can be automatically merged"
