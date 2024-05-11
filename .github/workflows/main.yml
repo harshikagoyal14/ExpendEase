@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
+    paths:
+      - '.github/workflows/basic_workflow.yml'
 
 jobs:
   build:
